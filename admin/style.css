@@ -1,15 +1,49 @@
-body {
-  padding: 2rem;
+/* Show desktop table by default, cards on small screens */
+.desktop-only {
+  display: block;
 }
-#tables .ui.table {
-  margin-top: 1rem;
-}
-.green-text {
-  color: green !important;
-  font-weight: bold;
+.mobile-only {
+  display: none;
 }
 
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Helpful on desktop for many columns */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ui.celled.table {
+  min-width: 1200px;
+}
+
+/* Payment coloring */
+.green-text {
+  color: #21ba45 !important;
+  font-weight: 700;
+}
 .red-text {
-  color: red !important;
-  font-weight: bold;
+  color: #db2828 !important;
+  font-weight: 700;
+}
+
+/* Mobile card polish */
+.mobile-card .header {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.mobile-card .meta {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+}
+.mobile-summary .item {
+  display: flex;
+  justify-content: space-between;
 }

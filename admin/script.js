@@ -1,9 +1,34 @@
+// ---- helpers ----
+const fmt = (n) => `$${parseFloat(n || 0).toFixed(2)}`;
+
+// Build a compact items list for mobile (only show qty > 0)
+function buildPreorderItemsList(row) {
+  const items = [
+    ["Poinsettia", row.poinsettia],
+    ["8” Centrepiece", row.centrepiece],
+    ["Wreath", row.wreath],
+    ["Candy Cane", row.candyCane],
+    ["Butter Chicken", row.butterChicken],
+    ["Butter Chickpea", row.butterChickpea],
+  ];
+  return (
+    items
+      .filter(([, qty]) => (qty || 0) > 0)
+      .map(
+        ([name, qty]) =>
+          `<div class="item"><div class="content">${name} × ${qty}</div></div>`
+      )
+      .join("") || `<div class="item"><div class="content">No items</div></div>`
+  );
+}
+
 // -------- Preorders --------
 async function loadPreorders() {
   const res = await fetch("/api/data/preorder");
   const data = await res.json();
-  const tbody = $("#preorder-body").empty();
 
+  // desktop table
+  const tbody = $("#preorder-body").empty();
   let grandTotal = 0,
     collected = 0;
   const totals = {
@@ -19,50 +44,96 @@ async function loadPreorders() {
     const total = parseFloat(row.total || 0);
     grandTotal += total;
     if (row.paymentReceived) collected += total;
-
-    // accumulate items
     Object.keys(totals).forEach((k) => (totals[k] += row[k] || 0));
 
+    const totalClass = row.paymentReceived ? "green-text" : "red-text";
+
     tbody.append(`
-      <tr data-index="${index}">
-        <td style="text-align:center">
-          <div class="ui checkbox">
-            <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
-          </div>
-        </td>
-        <td>${row.parentName || ""}</td>
-        <td>${row.childInfo || ""}</td>
-        <td>${row.phone || ""}</td>
-        <td>${row.email || ""}</td>
-        <td>${row.etransferName || ""}</td>
-        <td>${row.poinsettia || 0}</td>
-        <td>${row.centrepiece || 0}</td>
-        <td>${row.wreath || 0}</td>
-        <td>${row.candyCane || 0}</td>
-        <td>${row.butterChicken || 0}</td>
-        <td>${row.butterChickpea || 0}</td>
-        <td class="${row.paymentReceived ? "green-text" : "red-text"}">$${total.toFixed(2)}</td>
-      </tr>
-    `);
+        <tr data-index="${index}">
+          <td style="text-align:center">
+            <div class="ui checkbox">
+              <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
+              <label></label>
+            </div>
+          </td>
+          <td>${row.parentName || ""}</td>
+          <td>${row.childInfo || ""}</td>
+          <td>${row.phone || ""}</td>
+          <td>${row.email || ""}</td>
+          <td>${row.etransferName || ""}</td>
+          <td>${row.poinsettia || 0}</td>
+          <td>${row.centrepiece || 0}</td>
+          <td>${row.wreath || 0}</td>
+          <td>${row.candyCane || 0}</td>
+          <td>${row.butterChicken || 0}</td>
+          <td>${row.butterChickpea || 0}</td>
+          <td class="${totalClass}">${fmt(total)}</td>
+        </tr>
+      `);
   });
 
   const uncollected = grandTotal - collected;
-
   $("#preorder-foot").html(`
-    <tr><th colspan="6" style="text-align:right">Totals:</th>
+      <tr>
+        <th colspan="6" style="text-align:right">Totals:</th>
         <th>${totals.poinsettia}</th>
         <th>${totals.centrepiece}</th>
         <th>${totals.wreath}</th>
         <th>${totals.candyCane}</th>
         <th>${totals.butterChicken}</th>
         <th>${totals.butterChickpea}</th>
-        <th>$${grandTotal.toFixed(2)}</th></tr>
-    <tr><th colspan="12" style="text-align:right">Collected:</th>
-        <th class="green-text">$${collected.toFixed(2)}</th></tr>
-    <tr><th colspan="12" style="text-align:right">Uncollected:</th>
-        <th class="red-text">$${uncollected.toFixed(2)}</th></tr>
-  `);
+        <th>${fmt(grandTotal)}</th>
+      </tr>
+      <tr>
+        <th colspan="12" style="text-align:right;">Collected:</th>
+        <th class="green-text">${fmt(collected)}</th>
+      </tr>
+      <tr>
+        <th colspan="12" style="text-align:right;">Uncollected:</th>
+        <th class="red-text">${fmt(uncollected)}</th>
+      </tr>
+    `);
 
+  // mobile cards
+  const mlist = $("#preorder-list").empty();
+  data.forEach((row, index) => {
+    const total = parseFloat(row.total || 0);
+    mlist.append(`
+        <div class="item" data-index="${index}">
+          <div class="ui segment mobile-card">
+            <div class="ui grid">
+              <div class="ten wide column">
+                <div class="header">${row.parentName || ""}</div>
+                <div class="meta">${row.childInfo || ""}</div>
+                <div class="meta">${row.email || ""}${row.phone ? " • " + row.phone : ""}</div>
+              </div>
+              <div class="six wide column right aligned ${row.paymentReceived ? "green-text" : "red-text"}">
+                ${fmt(total)}
+              </div>
+            </div>
+            <div class="ui relaxed list">
+              ${buildPreorderItemsList(row)}
+            </div>
+            <div class="extra">
+              <div class="ui checkbox">
+                <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
+                <label>Payment received</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+  });
+
+  $("#preorder-mobile-summary").html(`
+      <div class="ui list mobile-summary">
+        <div class="item"><span>Collected</span> <strong class="green-text">${fmt(collected)}</strong></div>
+        <div class="item"><span>Uncollected</span> <strong class="red-text">${fmt(uncollected)}</strong></div>
+        <div class="item"><span>Grand Total</span> <strong>${fmt(grandTotal)}</strong></div>
+      </div>
+    `);
+
+  // activate Semantic checkboxes (both desktop and mobile)
   $(".ui.checkbox").checkbox();
 }
 
@@ -70,8 +141,9 @@ async function loadPreorders() {
 async function loadVendors() {
   const res = await fetch("/api/data/vendor");
   const data = await res.json();
-  const tbody = $("#vendor-body").empty();
 
+  // desktop table
+  const tbody = $("#vendor-body").empty();
   let grandTotal = 0,
     collected = 0;
 
@@ -80,88 +152,120 @@ async function loadVendors() {
     grandTotal += total;
     if (row.paymentReceived) collected += total;
 
+    const totalClass = row.paymentReceived ? "green-text" : "red-text";
+
     tbody.append(`
-      <tr data-index="${index}">
-        <td style="text-align:center">
-          <div class="ui checkbox">
-            <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
-          </div>
-        </td>
-        <td>${row.fullName || ""}</td>
-        <td>${row.businessName || ""}</td>
-        <td>${row.email || ""}</td>
-        <td>${row.phone || ""}</td>
-        <td>${row.tableOption === "extraTable" ? "Yes" : "No"}</td>
-        <td>${row.powerNeeded === "on" ? "Yes" : "No"}</td>
-        <td>${row.staffContact || ""}</td>
-        <td class="${row.paymentReceived ? "green-text" : "red-text"}">$${total.toFixed(2)}</td>
-      </tr>
-    `);
+        <tr data-index="${index}">
+          <td style="text-align:center">
+            <div class="ui checkbox">
+              <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
+              <label></label>
+            </div>
+          </td>
+          <td>${row.fullName || ""}</td>
+          <td>${row.businessName || ""}</td>
+          <td>${row.email || ""}</td>
+          <td>${row.phone || ""}</td>
+          <td>${row.tableOption === "extraTable" ? "Yes" : "No"}</td>
+          <td>${row.powerNeeded === "on" ? "Yes" : "No"}</td>
+          <td>${row.staffContact || ""}</td>
+          <td class="${totalClass}">${fmt(total)}</td>
+        </tr>
+      `);
   });
 
   const uncollected = grandTotal - collected;
-
   $("#vendor-foot").html(`
-    <tr><th colspan="8" style="text-align:right">Grand Total:</th>
-        <th>$${grandTotal.toFixed(2)}</th></tr>
-    <tr><th colspan="8" style="text-align:right">Collected:</th>
-        <th class="green-text">$${collected.toFixed(2)}</th></tr>
-    <tr><th colspan="8" style="text-align:right">Uncollected:</th>
-        <th class="red-text">$${uncollected.toFixed(2)}</th></tr>
-  `);
+      <tr><th colspan="8" style="text-align:right">Grand Total:</th><th>${fmt(grandTotal)}</th></tr>
+      <tr><th colspan="8" style="text-align:right">Collected:</th><th class="green-text">${fmt(collected)}</th></tr>
+      <tr><th colspan="8" style="text-align:right">Uncollected:</th><th class="red-text">${fmt(uncollected)}</th></tr>
+    `);
+
+  // mobile cards
+  const vlist = $("#vendor-list").empty();
+  data.forEach((row, index) => {
+    const total = parseFloat(row.total || 0);
+    vlist.append(`
+        <div class="item" data-index="${index}">
+          <div class="ui segment mobile-card">
+            <div class="ui grid">
+              <div class="ten wide column">
+                <div class="header">${row.fullName || ""}</div>
+                <div class="meta">${row.businessName || ""}</div>
+                <div class="meta">${row.email || ""}${row.phone ? " • " + row.phone : ""}</div>
+                <div class="meta">
+                  ${row.tableOption === "extraTable" ? "Extra table • " : ""}
+                  ${row.powerNeeded === "on" ? "Power" : ""}
+                </div>
+              </div>
+              <div class="six wide column right aligned ${row.paymentReceived ? "green-text" : "red-text"}">
+                ${fmt(total)}
+              </div>
+            </div>
+            <div class="extra">
+              <div class="ui checkbox">
+                <input type="checkbox" class="payment-toggle" ${row.paymentReceived ? "checked" : ""}>
+                <label>Payment received</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+  });
+
+  $("#vendor-mobile-summary").html(`
+      <div class="ui list mobile-summary">
+        <div class="item"><span>Collected</span> <strong class="green-text">${fmt(collected)}</strong></div>
+        <div class="item"><span>Uncollected</span> <strong class="red-text">${fmt(uncollected)}</strong></div>
+        <div class="item"><span>Grand Total</span> <strong>${fmt(grandTotal)}</strong></div>
+      </div>
+    `);
 
   $(".ui.checkbox").checkbox();
 }
 
-// Vendor payment toggle
-$("#vendor-body").on("change", ".payment-toggle", async function () {
-  const row = $(this).closest("tr");
-  const index = row.data("index");
-  const checked = $(this).is(":checked");
+// ---- event handlers for toggles (desktop + mobile) ----
+$("#preorder-body, #preorder-list").on(
+  "change",
+  ".payment-toggle",
+  async function () {
+    const index = $(this).closest("[data-index]").data("index");
+    const checked = $(this).is(":checked");
+    await fetch(`/api/data/preorder/${index}/payment`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paymentReceived: checked }),
+    });
+  }
+);
 
-  await fetch(`/api/data/vendor/${index}/payment`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ paymentReceived: checked }),
-  });
-});
+$("#vendor-body, #vendor-list").on(
+  "change",
+  ".payment-toggle",
+  async function () {
+    const index = $(this).closest("[data-index]").data("index");
+    const checked = $(this).is(":checked");
+    await fetch(`/api/data/vendor/${index}/payment`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paymentReceived: checked }),
+    });
+  }
+);
 
-// Preorder payment toggle
-$("#preorder-body").on("change", ".payment-toggle", async function () {
-  const row = $(this).closest("tr");
-  const index = row.data("index");
-  const checked = $(this).is(":checked");
+// ---- SSE: reload both (keeps inactive tab fresh too) ----
+const evtSource = new EventSource("/events");
+evtSource.onmessage = (e) => {
+  if (e.data === "update") {
+    loadPreorders();
+    loadVendors();
+  }
+};
+evtSource.onerror = (err) => console.error("SSE error:", err);
 
-  await fetch(`/api/data/preorder/${index}/payment`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ paymentReceived: checked }),
-  });
-});
-
-$(document).ready(function () {
-  // enable tabs
-  $(".menu .item").tab();
-
-  // initial load
+// ---- init ----
+$(function () {
+  $(".menu .item").tab(); // Semantic tabs
   loadPreorders();
   loadVendors();
 });
-
-const evtSource = new EventSource("/events");
-
-evtSource.onmessage = function (e) {
-  if (e.data === "update") {
-    const activeTab = $(".menu .item.active").data("tab");
-
-    if (activeTab === "preorder") {
-      loadPreorders();
-    } else if (activeTab === "vendor") {
-      loadVendors();
-    }
-  }
-};
-
-evtSource.onerror = function (err) {
-  console.error("❌ SSE error:", err);
-};
