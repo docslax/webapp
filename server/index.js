@@ -24,24 +24,27 @@ if (!adminPassword) {
 
 app.use(
   "/admin",
-  express.static(path.join(__dirname, "../admin")),
   basicAuth({
-    users: { admin: adminPassword },
+    users: { admin: adminPassword },  // username = "admin"
     challenge: true,
-  })
+  }),
+  express.static(path.join(__dirname, "../admin"))
 );
 
 const clients = [];
 
 // SSE endpoint
 app.get("/events", (req, res) => {
-  console.log("Client connected to SSE");
-
   res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
   res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
+  res.setHeader("Content-Encoding", "identity"); // 👈 force no compression
+
+  if (res.flushHeaders) res.flushHeaders();
 
   res.write("data: connected\n\n");
+
   clients.push(res);
 
   req.on("close", () => {
@@ -49,6 +52,11 @@ app.get("/events", (req, res) => {
     if (i !== -1) clients.splice(i, 1);
   });
 });
+
+// heartbeat
+setInterval(() => {
+  clients.forEach((res) => res.write(": keepalive\n\n"));
+}, 15000);
 
 // helper to push updates
 function broadcastUpdate() {
