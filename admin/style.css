@@ -1,0 +1,15 @@
+body {
+  padding: 2rem;
+}
+#tables .ui.table {
+  margin-top: 1rem;
+}
+.green-text {
+  color: green !important;
+  font-weight: bold;
+}
+
+.red-text {
+  color: red !important;
+  font-weight: bold;
+}

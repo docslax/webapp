@@ -1,0 +1,86 @@
+<h2>Thank you! Your pre-order has been received.</h2>
+
+<p>
+  Please submit your payment via e-transfer to 
+  <a href="mailto:qmspac@qms.bc.ca">qmspac@qms.bc.ca</a> 
+  with the memo <strong>"Presale - <%= applicationData.childInfo %>"</strong>.
+</p>
+
+<h3>Buyer Info</h3>
+<ul>
+  <li><strong>Parent’s Name:</strong> <%= applicationData.parentName %></li>
+  <li><strong>Child’s Name & Grade:</strong> <%= applicationData.childInfo %></li>
+  <li><strong>Phone:</strong> <%= applicationData.phone %></li>
+  <li><strong>Email:</strong> <%= applicationData.email %></li>
+  <li><strong>E-transfer Name/Business:</strong> <%= applicationData.etransferName %></li>
+</ul>
+
+<h3>Order Summary</h3>
+<table border="1" cellspacing="0" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (applicationData.poinsettia > 0) { %>
+      <tr>
+        <td>Poinsettia</td>
+        <td><%= applicationData.poinsettia %></td>
+        <td>$20.00</td>
+        <td>$<%= applicationData.poinsettia * 20 %></td>
+      </tr>
+    <% } %>
+    <% if (applicationData.centrepiece > 0) { %>
+      <tr>
+        <td>8” Centrepiece Ring</td>
+        <td><%= applicationData.centrepiece %></td>
+        <td>$25.00</td>
+        <td>$<%= applicationData.centrepiece * 25 %></td>
+      </tr>
+    <% } %>
+    <% if (applicationData.wreath > 0) { %>
+      <tr>
+        <td>Wreath</td>
+        <td><%= applicationData.wreath %></td>
+        <td>$45.00</td>
+        <td>$<%= applicationData.wreath * 45 %></td>
+      </tr>
+    <% } %>
+    <% if (applicationData.candyCane > 0) { %>
+      <tr>
+        <td>Candy Cane Wreath</td>
+        <td><%= applicationData.candyCane %></td>
+        <td>$35.00</td>
+        <td>$<%= applicationData.candyCane * 35 %></td>
+      </tr>
+    <% } %>
+    <% if (applicationData.butterChicken > 0) { %>
+      <tr>
+        <td>Sarab’s Butter Chicken</td>
+        <td><%= applicationData.butterChicken %></td>
+        <td>$18.00</td>
+        <td>$<%= applicationData.butterChicken * 18 %></td>
+      </tr>
+    <% } %>
+    <% if (applicationData.butterChickpea > 0) { %>
+      <tr>
+        <td>Sarab’s Butter Chickpea</td>
+        <td><%= applicationData.butterChickpea %></td>
+        <td>$15.00</td>
+        <td>$<%= applicationData.butterChickpea * 15 %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<h3>Total: $<%= applicationData.total %></h3>
+
+<p><b>Pickup Date:</b> <%= formatDateLong(config.pickupDate) %>, <%= config.pickupTime %> at <%= config.pickupLocation %>.</p>
+
+<p style="font-size: 0.9em; color: #666;">
+  This is an automated confirmation from QMS PAC - Holiday Market & Fair.
+</p>

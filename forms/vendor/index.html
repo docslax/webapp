@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+      integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <link rel="stylesheet" href="styles.css" />
+  <body style="z-index: 1000">
+    <form class="ui form application">
+      <div class="ui grid container">
+        <div class="column">
+          <div class="ui segment">
+            <div class="ui two column grid">
+              <div
+                class="adjusted_logo two wide column centered middle aligned"
+              >
+                <img
+                  id="logo"
+                  class="ui small centered center aligned image mobile only img"
+                  src="https://qms.bc.ca/wp-content/uploads/2022/05/QMS-Logo_full-name-horizontal_full-colour-web-1-1-1-150x150.png"
+                  alt="QMS Logo"
+                />
+              </div>
+              <div class="adjusted_header fourteen wide column middle aligned">
+                <h1 class="ui header centered">
+                  QMS Holiday Market & Fair Vendor Application
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class="ui centered grid">
+            <div class="column">
+              <div class="ui raised segment attached">
+                <div class="ui four column centered grid">
+                  <div class="left_header left floated six wide column">
+                    Event Date
+                  </div>
+                  <div class="right_content right floated ten wide column">
+                    Saturday, November 29, 2025
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui raised segment attached">
+                <div class="ui four column centered grid">
+                  <div class="left_header left floated six wide column">
+                    Event Location
+                  </div>
+                  <div class="right_content right floated ten wide column">
+                    QMS Campus - 660 Brownsey Avenue, Duncan, BC
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui raised segment attached">
+                <div class="ui four column centered grid">
+                  <div class="left_header left floated six wide column">
+                    Setup Time
+                  </div>
+                  <div class="right_content right floated ten wide column">
+                    8:00am–10:00am
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui raised segment attached">
+                <div class="ui four column centered grid">
+                  <div class="left_header left floated six wide column">
+                    Event Time
+                  </div>
+                  <div class="right_content right floated ten wide column">
+                    10:00am–2:00pm
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="ui block header centered">Details</h3>
+          <div class="ui stackable two column grid">
+            <div class="column">
+              <div class="ui positive message">
+                <div class="header">Early Bird Application Deadline</div>
+                <p>
+                  <span id="earlyBirdDeadline">Thursday, July 31, 2025</span>
+                </p>
+                <p>
+                  <span style="font-weight: bold"
+                    >Form and Fee must be recieved by this date</span
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="ui positive message">
+                <div class="header">Regular Application Deadline</div>
+                <p>
+                  <span id="applicationDeadline">Friday, November 7, 2025</span>
+                </p>
+                <p>
+                  <span style="font-weight: bold">
+                    Form and Fee must be recieved by this date
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <ol class="ui list">
+            <li value="*">
+              All booths include one indoor spot with ONLY one 6' table and two
+              chairs
+            </li>
+            <li value="*">Early Bird Booth Fee is $100</li>
+            <li value="*">Regular Booth Fee is $125</li>
+            <li value="*">
+              Payment is required via e-transfer to qmspac@qms.bc.ca. Ensure to
+              note '2025 Market Vendor' in memo field.
+            </li>
+            <li value="*">
+              Due to limited vendor spacing, if an extra table is needed or your
+              own extra table is brought, there is a charge of $50.
+            </li>
+            <li value="*">If power is required, the cost is $10.</li>
+            <li value="*">
+              Vendors must supply their own power cord(s), as required. (Please
+              consider bringing a minimum 25ft power cord.)
+            </li>
+          </ol>
+          <h3 class="ui block header centered">Applicant Information</h3>
+          <div class="required field">
+            <label>Name</label>
+            <div class="two fields">
+              <div class="field">
+                <input type="text" name="firstName" placeholder="First Name" />
+              </div>
+              <div class="field">
+                <input type="text" name="lastName" placeholder="Last Name" />
+              </div>
+            </div>
+          </div>
+          <div class="required field">
+            <label>Business Name</label>
+            <input
+              type="text"
+              name="businessName"
+              placeholder="Business Name"
+            />
+          </div>
+          <div class="required field">
+            <label>Phone Number</label>
+            <input type="text" name="phone" placeholder="Phone # (optional)" />
+          </div>
+          <div class="required field">
+            <label>E-mail</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="my-email@domain.com"
+            />
+          </div>
+          <div class="required field">
+            <label>
+              Provide a specific description of your booth, products and/or
+              services that you will be bringing to the market.
+            </label>
+            <div class="ui attached message info">
+              <div class="header">
+                Please specify if you will be selling food related products
+              </div>
+            </div>
+            <textarea class="attached" name="foodProducts"></textarea>
+          </div>
+          <div
+            id="staffContactField"
+            style="display: none"
+            class="required field"
+          >
+            <label>Staff Contact</label>
+            <input
+              type="text"
+              name="staffContact"
+              placeholder="Student Group - Staff Contact"
+            />
+          </div>
+          <div class="grouped fields">
+            <label>Pricing Option</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="earlyBird"
+                  name="boothPricing"
+                  data-amount="100"
+                  onchange="pricingOption(event)"
+                />
+                <label
+                  >Early Bird Pricing
+                  <span style="font-weight: bold">$100</span></label
+                >
+              </div>
+              <p></p>
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="regular"
+                  name="boothPricing"
+                  data-amount="125"
+                  onchange="pricingOption(event)"
+                />
+                <label
+                  >Regular Pricing
+                  <span style="font-weight: bold">$125</span></label
+                >
+              </div>
+              <p></p>
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="studentGroup"
+                  name="boothPricing"
+                  data-amount="50"
+                  onchange="pricingOption(event)"
+                />
+                <label
+                  >Student Group Pricing
+                  <span style="font-weight: bold">$50</span></label
+                >
+              </div>
+            </div>
+          </div>
+          <p></p>
+          <div class="grouped fields">
+            <label>Table Options</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="extraTable"
+                  name="tableOption"
+                  value="extraTable"
+                  data-amount="50"
+                  onchange="calculateTotal()"
+                />
+                <label for="extraTable"
+                  >Extra 6' Table
+                  <span style="font-weight: bold">$50</span></label
+                >
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="spaceForTable"
+                  name="tableOption"
+                  value="spaceForTable"
+                  data-amount="50"
+                  onchange="calculateTotal()"
+                />
+                <label for="spaceForTable"
+                  >Space for your own extra table
+                  <span style="font-weight: bold">$50</span></label
+                >
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input
+                  type="radio"
+                  id="noTable"
+                  name="tableOption"
+                  value="noTable"
+                  data-amount="0"
+                  checked
+                  onchange="calculateTotal()"
+                />
+                <label for="noTable">No Extra Table</label>
+              </div>
+            </div>
+          </div>
+          <p></p>
+          <div class="ui toggle checkbox">
+            <input
+              type="checkbox"
+              name="powerNeeded"
+              data-amount="10"
+              onchange="calculateTotal()"
+            />
+            <label
+              >Power supply needed
+              <span style="font-weight: bold">$10</span></label
+            >
+          </div>
+          <p></p>
+          <div>Total: <span id="total" data-amount="0">$0.00</span></div>
+          <h3 class="ui block header centered red">Disclaimer</h3>
+          <p>
+            By checking this box, the above named person(s) and/or business
+            releases Queen Margaret's School, the QMS Holiday Market & Fair and
+            the QMS Parents Association of all responsibility related to any
+            loss, theft, injury, COVID related illness, and/or personal property
+            damage during event.
+          </p>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="disclaimer" />
+              <label
+                >Must check box to confirm you have read and agree to our
+                disclaimer.
+              </label>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="ui ok button" id="submit-application">Submit</div>
+          </div>
+          <div
+            id="errorMessage"
+            class="ui error message"
+            style="display: none"
+          ></div>
+          <!-- ** Contact Us ** -->
+          <div class="ui info message">
+            Questions? Email us at
+            <a href="mailto:qmspac@qms.bc.ca">qmspac@qms.bc.ca</a>.
+          </div>
+          <!-- ** Submission Error Message ** -->
+          <div id="submit-error" class="ui error message submission hidden">
+            <p>An error occurred submitting your Order.</p>
+            <p>Please try to submit the Order again.</p>
+            <p>
+              If this message continues to occur take a screenshot or manually
+              type out your order details and submit it to
+              <a href="mailto:qmspac@qms.bc.ca">qmspac@qms.bc.ca</a>.
+            </p>
+            <p>We apologize for this inconvenience.</p>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- ** Order Confirmation Dialog ** -->
+    <div class="ui modal" id="application-confirm">
+      <div class="header">Your application has been accepted.</div>
+      <div class="content">
+        <p>
+          <b>Thank You!</b> Please submit your payment of
+          <span class="bold" id="reciept_total">$0.00</span> via E-Transfer to
+          <a>qmspac@qms.bc.ca</a>.
+        </p>
+        <p>
+          You will also receive an email with the details at the address you
+          provided. Thank you again, and we’ll see you soon!
+        </p>
+      </div>
+      <div class="actions">
+        <div class="ui ok button" id="close-modal">OK</div>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+    integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="script.js"></script>
+</html>

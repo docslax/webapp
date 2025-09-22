@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form class="ui form preorder">
+      <div class="ui container">
+        <h1 class="ui header centered" id="form-title">
+          QMS Holiday Market<br />Pre-Order Form
+        </h1>
+
+        <div class="ui message info" id="form-info"></div>
+
+        <!-- Parent/Child Info -->
+        <div class="ui stackable two column grid">
+          <div class="column required field">
+            <label>Parent’s Name</label>
+            <input type="text" name="parentName" />
+          </div>
+          <div class="column required field">
+            <label>Child’s Name & Grade</label>
+            <input type="text" name="childInfo" />
+          </div>
+        </div>
+
+        <div class="ui stackable two column grid">
+          <div class="column field">
+            <label>Phone Number</label>
+            <input type="text" name="phone" />
+          </div>
+          <div class="column required field">
+            <label>Email</label>
+            <input type="email" name="email" />
+          </div>
+        </div>
+
+        <!-- Order Items -->
+        <h3 class="ui dividing header">Your Order</h3>
+        <div
+          class="ui stackable doubling three column grid"
+          id="order-items"
+        ></div>
+
+        <!-- Order Total -->
+        <div class="ui segment">
+          <h3 class="ui header right aligned">
+            Order Total: <span id="orderTotal">$0.00</span>
+          </h3>
+        </div>
+
+        <!-- Payment Info -->
+        <div class="required field">
+          <label>Full Name / Business Name (for e-transfer)</label>
+          <input type="text" name="etransferName" class="fluid" />
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="field required">
+          <div class="ui checkbox">
+            <input type="checkbox" name="disclaimer" />
+            <label
+              >I confirm my preorder and agree to pick up & pay at the
+              event.</label
+            >
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="actions">
+          <div class="ui primary button fluid" id="submit-preorder">
+            Submit Pre-Order
+          </div>
+        </div>
+
+        <div
+          id="errorMessage"
+          class="ui error message"
+          style="display: none"
+        ></div>
+        <div id="submit-error" class="ui error message submission hidden">
+          <p>Error submitting preorder. Please try again or email us.</p>
+        </div>
+      </div>
+    </form>
+
+    <!-- Confirmation Modal -->
+    <div class="ui modal" id="preorder-confirm">
+      <div class="header">Pre-Order Received</div>
+      <div class="content">
+        <p>
+          <b>Thank You!</b> Your preorder has been received. Please remember to
+          pick it up on the day of the event. A confirmation email has been
+          sent.
+        </p>
+      </div>
+      <div class="actions">
+        <div class="ui ok button">OK</div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<h2>Thank you! Your Vendor application for 2025 has been received.</h2>
+
+<p>
+  Please ensure you submit your payment of 
+  <strong>$<%= applicationData.total %></strong> via E-Transfer to 
+  <a href="mailto:qmspac@qms.bc.ca">qmspac@qms.bc.ca</a>.
+</p>
+
+<h3>Application Details</h3>
+<ul>
+  <li><strong>Full Name:</strong> <%= applicationData.fullName %></li>
+  <li><strong>Business Name:</strong> <%= applicationData.businessName %></li>
+  <li><strong>Phone:</strong> <%= applicationData.phone %></li>
+  <li><strong>Email:</strong> <%= applicationData.email %></li>
+  <li><strong>Booth Description:</strong> <%= applicationData.boothDescription %></li>
+  <% if (applicationData.tableOption === 'extraTable') { %>
+    <li><strong>Extra Table:</strong> Yes</li>
+  <% } %>
+  <% if (applicationData.tableOption === 'spaceForTable') { %>
+    <li><strong>Space for Own Table:</strong> Yes</li>
+  <% } %>
+  <li><strong>Power Supply Required:</strong> <%= applicationData.powerNeeded === 'on' ? 'Yes' : 'No' %></li>
+  <% if (applicationData.staffContact) { %>
+    <li><strong>Staff Contact:</strong> <%= applicationData.staffContact %></li>
+  <% } %>
+</ul>
+
+<p style="font-size: 0.9em; color: #666;">
+  This is an automated confirmation from QMS PAC - Holiday Market & Fair.
+</p>

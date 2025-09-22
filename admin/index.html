@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QMS PAC - Admin Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="ui container">
+      <h1 class="ui header center aligned">
+        QMS PAC - Holiday Market &amp; Fair
+      </h1>
+
+      <!-- Tabs -->
+      <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="preorder">Preorders</a>
+        <a class="item" data-tab="vendor">Vendor Signup</a>
+      </div>
+
+      <!-- Preorders Table -->
+      <div class="ui bottom attached tab segment active" data-tab="preorder">
+        <div class="ui horizontal scroll">
+          <table class="ui celled table">
+            <thead>
+              <tr>
+                <th>Payment Received</th>
+                <th>Parent</th>
+                <th>Child</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>E-transfer Name</th>
+                <th>Poinsettia</th>
+                <th>Centrepiece</th>
+                <th>Wreath</th>
+                <th>Candy Cane</th>
+                <th>Butter Chicken</th>
+                <th>Butter Chickpea</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="preorder-body"></tbody>
+            <tfoot id="preorder-foot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Vendor Table -->
+      <div class="ui bottom attached tab segment" data-tab="vendor">
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th>Payment Received</th>
+              <th>Full Name</th>
+              <th>Business</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Extra Table</th>
+              <th>Power</th>
+              <th>Total</th>
+              <th>Staff Contact</th>
+            </tr>
+          </thead>
+          <tbody id="vendor-body"></tbody>
+          <tfoot id="vendor-foot"></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

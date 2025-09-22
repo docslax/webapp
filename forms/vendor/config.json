@@ -1,0 +1,22 @@
+{
+  "dataFile": "forms/vendor/data.json",
+  "emailTemplate": "vendorEmail.ejs",
+  "subject": "[QMS Vendor Application]",
+  "title": "QMS Holiday Market & Fair Vendor Application",
+  "eventDate": "2025-11-29",
+  "setupTime": "8:00am–10:00am",
+  "eventTime": "10:00am–2:00pm",
+  "location": "QMS Campus - 660 Brownsey Avenue, Duncan, BC",
+  "earlyBirdDeadline": "2025-07-31",
+  "regularDeadline": "2025-11-07",
+  "prices": {
+    "earlyBird": 100,
+    "regular": 125,
+    "student": 50,
+    "extraTable": 50,
+    "tableSpace": 50,
+    "power": 10
+  },
+  "etransferEmail": "qmspac@qms.bc.ca",
+  "etransferMemo": "2025 Market Vendor"
+}

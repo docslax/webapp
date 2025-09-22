@@ -1,0 +1,27 @@
+{
+  "dataFile": "forms/preorder/data.json",
+  "emailTemplate": "preorderEmail.ejs",
+  "subject": "[QMS Pre-Order Confirmation]",
+  "paymentDeadline": "2025-10-27T00:00:00",
+  "pickupDate": "2025-11-29T00:00:00",
+  "pickupTime": "10:00am–1:45pm",
+  "pickupLocation": "Founders’ Hall",
+  "etransferEmail": "qmspac@qms.bc.ca",
+  "etransferMemo": "Presale",
+  "items": [
+    { "id": "poinsettia", "name": "Poinsettia", "price": 20 },
+    { "id": "centrepiece", "name": "8” Centrepiece Ring", "price": 25 },
+    { "id": "wreath", "name": "Wreath", "price": 45 },
+    { "id": "candyCane", "name": "Candy Cane Shape Wreath", "price": 35 },
+    {
+      "id": "butterChicken",
+      "name": "Butter Chicken (for Two, frozen)",
+      "price": 18
+    },
+    {
+      "id": "butterChickpea",
+      "name": "Butter Chickpeas (for Two, frozen)",
+      "price": 15
+    }
+  ]
+}

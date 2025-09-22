@@ -1,0 +1,15 @@
+body {
+  background: #f9f9f9;
+}
+
+.ui.container {
+  margin-top: 2em;
+}
+
+.ui.header.centered {
+  margin-bottom: 1em;
+}
+
+.ui.segment {
+  background: #fff;
+}
