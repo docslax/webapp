@@ -20,77 +20,25 @@
       </h1>
 
       <!-- Tabs menu -->
-      <div class="ui top attached tabular menu">
+      <div class="ui tabular menu">
         <a class="item active" data-tab="preorder">Preorders</a>
         <a class="item" data-tab="vendor">Vendor Signup</a>
       </div>
 
       <!-- Preorders tab -->
-      <div class="ui bottom attached active tab segment" data-tab="preorder">
-        <!-- DESKTOP TABLE -->
-        <div class="desktop-only">
-          <div class="table-wrapper">
-            <table class="ui celled table" id="preorder-table">
-              <thead>
-                <tr>
-                  <th>Paid</th>
-                  <th>Parent</th>
-                  <th>Child</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>E-transfer Name</th>
-                  <th>Poinsettia</th>
-                  <th>Centrepiece</th>
-                  <th>Wreath</th>
-                  <th>Candy Cane</th>
-                  <th>Butter Chicken</th>
-                  <th>Butter Chickpea</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody id="preorder-body"></tbody>
-              <tfoot id="preorder-foot"></tfoot>
-            </table>
-          </div>
-        </div>
-
+      <div class="ui active tab" data-tab="preorder">
         <!-- MOBILE LIST -->
-        <div class="mobile-only">
-          <div id="preorder-list" class="ui very relaxed divided list"></div>
-          <div id="preorder-mobile-summary" class="ui segment"></div>
-        </div>
+
+        <div id="preorder-list" class="ui four doubling cards"></div>
+        <div id="preorder-mobile-summary" class="ui segment"></div>
       </div>
 
       <!-- Vendors tab -->
-      <div class="ui bottom attached tab segment" data-tab="vendor">
-        <!-- DESKTOP TABLE -->
-        <div class="desktop-only">
-          <div class="table-wrapper">
-            <table class="ui celled table" id="vendor-table">
-              <thead>
-                <tr>
-                  <th>Paid</th>
-                  <th>Full Name</th>
-                  <th>Business</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Extra Table</th>
-                  <th>Power</th>
-                  <th>Staff Contact</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody id="vendor-body"></tbody>
-              <tfoot id="vendor-foot"></tfoot>
-            </table>
-          </div>
-        </div>
-
+      <div class="ui tab" data-tab="vendor">
         <!-- MOBILE LIST -->
-        <div class="mobile-only">
-          <div id="vendor-list" class="ui very relaxed divided list"></div>
-          <div id="vendor-mobile-summary" class="ui segment"></div>
-        </div>
+
+        <div id="vendor-list" class="ui four doubling cards"></div>
+        <div id="vendor-mobile-summary" class="ui segment"></div>
       </div>
     </div>
 

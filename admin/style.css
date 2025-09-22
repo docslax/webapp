@@ -1,20 +1,3 @@
-/* Show desktop table by default, cards on small screens */
-.desktop-only {
-  display: block;
-}
-.mobile-only {
-  display: none;
-}
-
-@media (max-width: 767px) {
-  .desktop-only {
-    display: none;
-  }
-  .mobile-only {
-    display: block;
-  }
-}
-
 /* Helpful on desktop for many columns */
 .table-wrapper {
   overflow-x: auto;
@@ -35,15 +18,55 @@
 }
 
 /* Mobile card polish */
-.mobile-card .header {
-  font-size: 1.05rem;
-  font-weight: 600;
+.mobile-card {
+  padding: 0.75rem 1rem !important;
+  margin-bottom: 0.75rem !important;
 }
-.mobile-card .meta {
-  color: rgba(0, 0, 0, 0.6);
+
+.mobile-card .header {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.mobile-card .compact-list p {
+  margin: 0.2rem 0;
   font-size: 0.9rem;
 }
 .mobile-summary .item {
   display: flex;
   justify-content: space-between;
+}
+div.compact-list > p.first-child {
+  margin-top: 0.5em !important;
+}
+div.compact-list > p {
+  margin: 0.2em;
+}
+div.compact-list > div.item {
+  margin-left: 1em;
+}
+div.mobile-card .extra {
+  margin-top: 0.5em;
+}
+div.ui.grid > div > div.header {
+  margin-bottom: 0.5em !important;
+}
+div.ui.grid > div > p {
+  margin: 0.2em;
+}
+.ui.cards > .card {
+  min-height: 220px; /* force consistent height */
+}
+
+.small-text {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.compact-list p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+.ui.card {
+  margin: 1em 1em !important;
 }
