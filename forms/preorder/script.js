@@ -18,8 +18,8 @@ $(document).ready(async function () {
   // Populate title & info
   $("#form-title").text(config.title);
   $("#form-info").html(`
-    <p>Ensure your home is ready for the holidays with poinsettias and wreaths,
-      and enjoy Sarab’s famous butter chicken or chickpea meals.</p>
+    <p>Ensure your home is ready for the holidays with a beautiful poinsettia or a holiday wreath. 
+    Then relax and enjoy the famous butter chicken or chickpea meal from the QMS Kitchen.</p>
     <p>Payment due by <strong>${formatDateLong(config.paymentDeadline)}</strong>.
       E-transfer to <strong>${config.etransferEmail}</strong> (use memo <em>"${config.etransferMemo}"</em>).</p>
     <p>Pickup: <strong>${formatDateLong(config.pickupDate)}</strong>,

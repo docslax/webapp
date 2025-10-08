@@ -10,18 +10,18 @@
   "etransferMemo": "Presale",
   "items": [
     { "id": "poinsettia", "name": "Poinsettia", "price": 20 },
-    { "id": "centrepiece", "name": "8” Centrepiece Ring", "price": 25 },
+    { "id": "centrepiece", "name": "8” Centrepiece Ring", "price": 30 },
     { "id": "wreath", "name": "Wreath", "price": 45 },
-    { "id": "candyCane", "name": "Candy Cane Shape Wreath", "price": 35 },
+    { "id": "candyCane", "name": "Candy Cane Shape Wreath", "price": 40 },
     {
       "id": "butterChicken",
-      "name": "Butter Chicken (for Two, frozen)",
-      "price": 18
+      "name": "Butter Chicken (for Two, fresh)",
+      "price": 20
     },
     {
       "id": "butterChickpea",
-      "name": "Butter Chickpeas (for Two, frozen)",
-      "price": 15
+      "name": "Butter Chickpeas (for Two, fresh)",
+      "price": 18
     }
   ]
 }
