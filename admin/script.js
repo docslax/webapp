@@ -193,6 +193,50 @@ $("#vendor-body, #vendor-list").on(
   }
 );
 
+// -------- Reports --------
+async function loadReports() {
+  const res = await fetch("/api/reports/preorder");
+  const json = await res.json();
+
+  const tbody = $("#report-body").empty();
+  const tfoot = $("#report-foot").empty();
+
+  if (!json.totals || !json.totals.items) {
+    tbody.html("<tr><td colspan='8'>No report data available</td></tr>");
+    return;
+  }
+
+  const items = json.totals.items;
+  const summary = json.totals.summary;
+
+  Object.entries(items).forEach(([name, item]) => {
+    tbody.append(`
+      <tr>
+        <td><strong>${name}</strong></td>
+        <td>${fmt(item.price)}</td>
+        <td>${item.totalQty}</td>
+        <td>${item.paidQty}</td>
+        <td>${item.unpaidQty}</td>
+        <td>${fmt(item.totalRevenue)}</td>
+        <td class="green-text">${fmt(item.paidRevenue)}</td>
+        <td class="red-text">${fmt(item.unpaidRevenue)}</td>
+      </tr>
+    `);
+  });
+
+  tfoot.html(`
+    <tr class="active">
+      <th colspan="5" style="text-align:right">Grand Totals:</th>
+      <th>${fmt(summary.grandTotal)}</th>
+      <th class="green-text">${fmt(summary.totalPaid)}</th>
+      <th class="red-text">${fmt(summary.totalUnpaid)}</th>
+    </tr>
+    <tr>
+      <td colspan="8"><strong>Total Orders:</strong> ${summary.orders}</td>
+    </tr>
+  `);
+}
+
 // ---- SSE: reload both (keeps inactive tab fresh too) ----
 const evtSource = new EventSource("/events");
 evtSource.onmessage = (e) => {
@@ -205,7 +249,14 @@ evtSource.onerror = (err) => console.error("SSE error:", err);
 
 // ---- init ----
 $(function () {
-  $(".menu .item").tab(); // Semantic tabs
+  $(".menu .item").tab({
+    onVisible: (tab) => {
+      if (tab === "preorder") loadPreorders();
+      else if (tab === "vendor") loadVendors();
+      else if (tab === "reports") loadReports();
+    },
+  });
+
   loadPreorders();
   loadVendors();
 });

@@ -13,3 +13,11 @@ body {
 .ui.segment {
   background: #fff;
 }
+
+ul {
+  list-style-type: none; /* Removes default bullets */
+}
+
+ul li::before {
+  content: "– "; /* Inserts an en dash before each list item */
+}

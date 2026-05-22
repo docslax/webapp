@@ -20,10 +20,16 @@ $(document).ready(async function () {
   $("#form-info").html(`
     <p>Ensure your home is ready for the holidays with a beautiful poinsettia or a holiday wreath. 
     Then relax and enjoy the famous butter chicken or chickpea meal from the QMS Kitchen.</p>
-    <p>Payment due by <strong>${formatDateLong(config.paymentDeadline)}</strong>.
-      E-transfer to <strong>${config.etransferEmail}</strong> (use memo <em>"${config.etransferMemo}"</em>).</p>
-    <p>Pickup: <strong>${formatDateLong(config.pickupDate)}</strong>,
-      ${config.pickupTime}, ${config.pickupLocation}.</p>
+    <p>Payments due by <strong>${formatDateLong(config.paymentDeadline)}</strong>.
+      via e-transfer to <strong>${config.etransferEmail}</strong>. All e-transfers must include
+      "Presale" and the parent's name in the memo field. Enter the FULL name or Business name 
+      as it appears on the e-transfer in the provided field below.</p>
+    <p>Pickup: <strong>${formatDateLong(config.pickupDate)}</strong>, ${config.pickupTime} at Queen Margaret's School
+      <ul>
+        <li>Poinsettias & Wreaths can be picked up in DBR's Sports Hall</li>
+        <li>Butter Chicken/Chickpea can be picked up at Karin Quinn Hall</li>
+      </ul>
+    </p>
   `);
 
   // Build item cards dynamically
@@ -95,7 +101,7 @@ $(document).ready(async function () {
     $("#submit-error").addClass("hidden");
     $form.form("validate form");
 
-    if ($form.form("is valid")) {
+    if ($form.form("is valid")) { 
       $("#submit-preorder").addClass("loading");
 
       const formValues = $form.form("get values");
@@ -142,6 +148,8 @@ $(document).ready(async function () {
   };
 
   $(".ui.form.preorder").form({
+    inline: true,
+    on: "blur",
     fields: {
       parentName: {
         rules: [{ type: "empty", prompt: "Please enter the Parent’s Name" }],
@@ -152,8 +160,8 @@ $(document).ready(async function () {
         ],
       },
       phone: {
-        optional: true,
         rules: [
+          { type: "empty", prompt: "Please enter in a valid phone number (10 digits)"},
           {
             type: "phone",
             prompt: "Please enter a valid phone number (10 digits)",

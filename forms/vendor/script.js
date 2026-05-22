@@ -57,8 +57,8 @@ function setRadioButtonDefaults() {
   const submit = $("#submit-application");
 
   const currentDate = new Date();
-  const earlyBirdEndDate = new Date("2025-07-31T23:59:59");
-  const regularEndDate = new Date("2025-11-07T23:59:59");
+  const earlyBirdEndDate = new Date("2026-07-31T23:59:59");
+  const regularEndDate = new Date("2025-11-06T23:59:59");
 
   if (currentDate <= earlyBirdEndDate) {
     earlyBirdRadio.prop("checked", true).prop("disabled", false);
@@ -138,7 +138,25 @@ $("#submit-application").click(async function (e) {
   }
 });
 
-$(document).ready(function () {
+$(document).ready(async function () {
+  const formatter = new Intl.NumberFormat("en-CA", {
+    style: "currency",
+    currency: "CAD",
+  });
+
+  let config;
+
+  // Load config.json dynamically
+  try {
+    const res = await fetch("config.json");
+    config = await res.json();
+  } catch (err) {
+    console.error("Failed to load config.json", err);
+    return;
+  }
+  
+  $("#form-title").text(config.title);
+
   // --- Init ---
   $(".ui.checkbox").checkbox();
   setRadioButtonDefaults();

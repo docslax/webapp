@@ -23,6 +23,7 @@
       <div class="ui tabular menu">
         <a class="item active" data-tab="preorder">Preorders</a>
         <a class="item" data-tab="vendor">Vendor Signup</a>
+        <a class="item" data-tab="reports">Preorder Report</a>
       </div>
 
       <!-- Preorders tab -->
@@ -39,6 +40,26 @@
 
         <div id="vendor-list" class="ui four doubling cards"></div>
         <div id="vendor-mobile-summary" class="ui segment"></div>
+      </div>
+
+      <div class="ui bottom attached tab segment" data-tab="reports">
+        <h3 class="ui dividing header">Preorder Sales Report</h3>
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Total Qty</th>
+              <th>Paid Qty</th>
+              <th>Unpaid Qty</th>
+              <th>Total Revenue</th>
+              <th>Paid Revenue</th>
+              <th>Unpaid Revenue</th>
+            </tr>
+          </thead>
+          <tbody id="report-body"></tbody>
+          <tfoot id="report-foot"></tfoot>
+        </table>
       </div>
     </div>
 

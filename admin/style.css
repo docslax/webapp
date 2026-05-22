@@ -70,3 +70,69 @@ div.ui.grid > div > p {
 .ui.card {
   margin: 1em 1em !important;
 }
+
+.green-text { color: #21ba45 !important; font-weight: bold; }
+.red-text { color: #db2828 !important; font-weight: bold; }
+.ui.table tfoot th { background: #f9fafb !important; }
+
+/* --- Report Table Layout Fix --- */
+[data-tab="reports"] {
+  overflow-x: auto;        /* horizontal scroll for narrow screens */
+  max-width: 100%;
+}
+
+.ui.table {
+  width: 100%;
+  table-layout: auto;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+.ui.table td,
+.ui.table th {
+  text-align: right;
+  padding: 0.75em;
+}
+
+.ui.table td:first-child,
+.ui.table th:first-child {
+  text-align: left;
+}
+
+/* Sticky footer when scrolling vertically */
+.ui.table tfoot {
+  position: sticky;
+  bottom: 0;
+  background: #fff !important;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  z-index: 5;
+}
+
+/* Make table more compact on phones */
+@media (max-width: 768px) {
+  .ui.table {
+    font-size: 0.9em;
+  }
+  .ui.table thead {
+    display: none; /* hide header for small screens */
+  }
+  .ui.table tr {
+    display: block;
+    margin-bottom: 1em;
+    border: 1px solid #eee;
+    border-radius: 0.5em;
+    padding: 0.5em;
+  }
+  .ui.table td {
+    display: flex;
+    justify-content: space-between;
+    text-align: left !important;
+    white-space: normal;
+    border: none !important;
+  }
+  .ui.table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #888;
+  }
+}

@@ -3,7 +3,7 @@
 <p>
   Please submit your payment via e-transfer to 
   <a href="mailto:qmspac@qms.bc.ca">qmspac@qms.bc.ca</a> 
-  with the memo <strong>"Presale - <%= applicationData.childInfo %>"</strong>.
+  with the memo <strong>"Presale - <%= applicationData.parentName %>"</strong>.
 </p>
 
 <h3>Buyer Info</h3>
@@ -79,7 +79,13 @@
 
 <h3>Total: $<%= applicationData.total %></h3>
 
-<p><b>Pickup Date:</b> <%= formatDateLong(config.pickupDate) %>, <%= config.pickupTime %> at <%= config.pickupLocation %>.</p>
+<p>
+  <b>Pickup Date:</b> <%= formatDateLong(config.pickupDate) %>, <%= config.pickupTime %> at Queen Margaret's School.
+  <ul>
+    <li>Poinsettias & Wreaths can be picked up in DBR's Sports Hall</li>
+    <li>Butter Chicken/Chickpea can be picked up at Karin Quinn Hall</li>
+  </ul>
+</p>
 
 <p style="font-size: 0.9em; color: #666;">
   This is an automated confirmation from QMS PAC - Holiday Market & Fair.

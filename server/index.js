@@ -10,12 +10,35 @@ const basicAuth = require("express-basic-auth");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Clean invisible or junk characters from Facebook links
+app.use((req, res, next) => {
+  const invisibleCharPattern = /%E2%81%A0|[\u200B-\u200F\u202A-\u202E\u2060-\u206F]/i;
+  const cleanRoutes = ['/preorder', '/vendor'];
+
+  for (const route of cleanRoutes) {
+    // only redirect if the path matches that route AND contains invisible characters
+    if (req.path.startsWith(route) && invisibleCharPattern.test(req.url)) {
+      return res.redirect(301, route);
+    }
+  }
+
+  next();
+});
+
 
 // Serve each form’s static assets
 app.use("/vendor", express.static(path.join(__dirname, "../forms/vendor")));
 app.use("/preorder", express.static(path.join(__dirname, "../forms/preorder")));
+
 
 const adminPassword = process.env.ADMIN_PASS;
 if (!adminPassword) {
@@ -52,6 +75,80 @@ app.get("/events", (req, res) => {
     if (i !== -1) clients.splice(i, 1);
   });
 });
+
+// ===== Reports API =====
+app.get("/api/reports/:form", (req, res) => {
+  const form = req.params.form;
+  const file = path.join(__dirname, `../forms/${form}/data.json`);
+  const configPath = path.join(__dirname, `../forms/${form}/config.json`);
+
+  if (!fs.existsSync(file)) return res.status(404).json({ error: "No data found" });
+  if (!fs.existsSync(configPath)) return res.status(404).json({ error: "Missing config" });
+
+  const data = JSON.parse(fs.readFileSync(file, "utf8"));
+  const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  const items = config.items || [];
+
+  const report = {};
+  let grandTotal = 0;
+  let totalPaid = 0;
+  let totalUnpaid = 0;
+
+  items.forEach((item) => {
+    report[item.name] = {
+      id: item.id,
+      price: item.price,
+      totalQty: 0,
+      paidQty: 0,
+      unpaidQty: 0,
+      totalRevenue: 0,
+      paidRevenue: 0,
+      unpaidRevenue: 0,
+    };
+  });
+
+  data.forEach((row) => {
+    const paid = !!row.paymentReceived;
+
+    items.forEach((item) => {
+      const key = item.key || item.id;
+      const qty = parseFloat(row[key] || 0);
+      const revenue = qty * item.price;
+
+      if (qty > 0) {
+        const stats = report[item.name];
+        stats.totalQty += qty;
+        stats.totalRevenue += revenue;
+
+        if (paid) {
+          stats.paidQty += qty;
+          stats.paidRevenue += revenue;
+        } else {
+          stats.unpaidQty += qty;
+          stats.unpaidRevenue += revenue;
+        }
+      }
+    });
+
+    const orderTotal = parseFloat(row.total || 0);
+    grandTotal += orderTotal;
+    if (paid) totalPaid += orderTotal;
+    else totalUnpaid += orderTotal;
+  });
+
+  res.json({
+    totals: {
+      items: report,
+      summary: {
+        grandTotal: grandTotal.toFixed(2),
+        totalPaid: totalPaid.toFixed(2),
+        totalUnpaid: totalUnpaid.toFixed(2),
+        orders: data.length,
+      },
+    },
+  });
+});
+
 
 // heartbeat
 setInterval(() => {
