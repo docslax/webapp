@@ -40,7 +40,10 @@
                   <div class="left_header left floated six wide column">
                     Event Date
                   </div>
-                  <div class="right_content right floated ten wide column">
+                  <div
+                    class="right_content right floated ten wide column"
+                    id="eventDateText"
+                  >
                     Saturday, November 28, 2026
                   </div>
                 </div>
@@ -51,7 +54,10 @@
                   <div class="left_header left floated six wide column">
                     Event Location
                   </div>
-                  <div class="right_content right floated ten wide column">
+                  <div
+                    class="right_content right floated ten wide column"
+                    id="eventLocationText"
+                  >
                     QMS Campus - 660 Brownsey Avenue, Duncan, BC
                   </div>
                 </div>
@@ -62,7 +68,10 @@
                   <div class="left_header left floated six wide column">
                     Setup Time
                   </div>
-                  <div class="right_content right floated ten wide column">
+                  <div
+                    class="right_content right floated ten wide column"
+                    id="setupTimeText"
+                  >
                     8:00am–10:00am
                   </div>
                 </div>
@@ -73,7 +82,10 @@
                   <div class="left_header left floated six wide column">
                     Event Time
                   </div>
-                  <div class="right_content right floated ten wide column">
+                  <div
+                    class="right_content right floated ten wide column"
+                    id="eventTimeText"
+                  >
                     10:00am–2:00pm
                   </div>
                 </div>
@@ -114,17 +126,27 @@
               All booths include one indoor spot with ONLY one 6' table and two
               chairs
             </li>
-            <li value="*">Early Bird Booth Fee is $100</li>
-            <li value="*">Regular Booth Fee is $125</li>
             <li value="*">
-              Payment is required via e-transfer to qmspac@qms.bc.ca. Ensure to
-              note '2026 Market Vendor' in memo field.
+              Early Bird Booth Fee is <span id="earlyBirdFeeText">$100</span>
+            </li>
+            <li value="*">
+              Regular Booth Fee is <span id="regularFeeText">$125</span>
+            </li>
+            <li value="*">
+              Payment is required via e-transfer to
+              <span id="etransferEmailText">qmspac@qms.bc.ca</span>. Ensure to
+              note '<span id="etransferMemoText">2026 Market Vendor</span>' in
+              memo field.
             </li>
             <li value="*">
               Due to limited vendor spacing, if an extra table is needed or your
-              own extra table is brought, there is a charge of $50.
+              own extra table is brought, there is a charge of
+              <span id="extraTableFeeText">$50</span>.
             </li>
-            <li value="*">If power is required, the cost is $10.</li>
+            <li value="*">
+              If power is required, the cost is
+              <span id="powerFeeText">$10</span>.
+            </li>
             <li value="*">
               Vendors must supply their own power cord(s), as required. (Please
               consider bringing a minimum 25ft power cord.)
@@ -163,13 +185,16 @@
             />
           </div>
           <div class="required field">
-            <label>
-              Booth Description / Products
-            </label>
+            <label> Booth Description / Products </label>
             <div class="ui attached message info">
               <div class="header">
-                <li>Provide a specific description of your booth, products and/or services that you will be bringing to the market.</li>
-                <li>Please specify if you will be selling food related products</li>
+                <li>
+                  Provide a specific description of your booth, products and/or
+                  services that you will be bringing to the market.
+                </li>
+                <li>
+                  Please specify if you will be selling food related products
+                </li>
               </div>
             </div>
             <textarea class="attached" name="foodProducts"></textarea>
@@ -199,7 +224,9 @@
                 />
                 <label
                   >Early Bird Pricing
-                  <span style="font-weight: bold">$100</span></label
+                  <span style="font-weight: bold" id="earlyBirdPriceLabel"
+                    >$100</span
+                  ></label
                 >
               </div>
               <p></p>
@@ -213,7 +240,9 @@
                 />
                 <label
                   >Regular Pricing
-                  <span style="font-weight: bold">$125</span></label
+                  <span style="font-weight: bold" id="regularPriceLabel"
+                    >$125</span
+                  ></label
                 >
               </div>
               <p></p>
@@ -227,7 +256,9 @@
                 />
                 <label
                   >Student Group Pricing
-                  <span style="font-weight: bold">$50</span></label
+                  <span style="font-weight: bold" id="studentPriceLabel"
+                    >$50</span
+                  ></label
                 >
               </div>
             </div>
@@ -247,7 +278,9 @@
                 />
                 <label for="extraTable"
                   >Extra 6' Table
-                  <span style="font-weight: bold">$50</span></label
+                  <span style="font-weight: bold" id="extraTablePriceLabel"
+                    >$50</span
+                  ></label
                 >
               </div>
             </div>
@@ -263,7 +296,9 @@
                 />
                 <label for="spaceForTable"
                   >Space for your own extra table
-                  <span style="font-weight: bold">$50</span></label
+                  <span style="font-weight: bold" id="tableSpacePriceLabel"
+                    >$50</span
+                  ></label
                 >
               </div>
             </div>
@@ -292,7 +327,9 @@
             />
             <label
               >Power supply needed
-              <span style="font-weight: bold">$10</span></label
+              <span style="font-weight: bold" id="powerPriceLabel"
+                >$10</span
+              ></label
             >
           </div>
           <p></p>
@@ -348,7 +385,9 @@
         <p>
           <b>Thank You!</b> Please submit your payment of
           <span class="bold" id="reciept_total">$0.00</span> via E-Transfer to
-          <a>qmspac@qms.bc.ca</a>.
+          <a id="etransferEmailLink" href="mailto:qmspac@qms.bc.ca"
+            >qmspac@qms.bc.ca</a
+          >.
         </p>
         <p>
           You will also receive an email with the details at the address you

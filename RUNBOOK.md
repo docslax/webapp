@@ -229,8 +229,8 @@ Operational rule:
 
 Important current behavior:
 
-- Vendor page pricing/deadline logic is currently hardcoded in `forms/vendor/script.js` and `forms/vendor/index.html`.
-- Updating `prices` or deadlines in `forms/vendor/config.json` alone does not fully update the rendered page or pricing logic.
+- Vendor page event details, pricing labels/amounts, e-transfer copy, and deadline logic are loaded from `forms/vendor/config.json` by `forms/vendor/script.js`.
+- After config changes, refresh the page (or restart the app if deployed behind aggressive caching) and verify totals with a test submission.
 
 ### 7.3 Safe config edit workflow
 
@@ -258,11 +258,6 @@ Daily/weekly operator checks:
 
 ## 9. Known limitations to be aware of
 
-- Vendor form has a field mismatch:
-  - HTML textarea uses `name="foodProducts"`
-  - Submit JS sends `boothDescription` from `formValues.boothDescription`
-  - Result: booth description may be blank in saved data/email.
-- Vendor pricing/deadline data in config is not fully wired to UI logic.
 - Report API currently exists only for preorder (`/api/reports/preorder`).
 
 ## 10. Quick reference

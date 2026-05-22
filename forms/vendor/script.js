@@ -3,6 +3,8 @@ const formatter = new Intl.NumberFormat("en-CA", {
   currency: "CAD",
 });
 
+let config = null;
+
 // --- Pricing Option Helper ---
 const pricingOption = (e) => {
   const id = e.target.id;
@@ -31,19 +33,19 @@ function calculateTotal() {
   const boothPricing = document.querySelectorAll('[name="boothPricing"]');
   const powerNeeded = document.querySelectorAll('[name="powerNeeded"]:checked');
   const tableOptions = document.querySelectorAll(
-    '[name="tableOption"]:checked'
+    '[name="tableOption"]:checked',
   );
 
   boothPricing.forEach((radioButton) => {
     if (radioButton.checked) {
-      total += parseFloat(radioButton.getAttribute("data-amount"));
+      total += parseFloat(radioButton.getAttribute("data-amount")) || 0;
     }
   });
   powerNeeded.forEach((checkbox) => {
-    total += parseFloat(checkbox.getAttribute("data-amount"));
+    total += parseFloat(checkbox.getAttribute("data-amount")) || 0;
   });
   tableOptions.forEach((option) => {
-    total += parseFloat(option.getAttribute("data-amount"));
+    total += parseFloat(option.getAttribute("data-amount")) || 0;
   });
 
   $("#total").text(formatter.format(total)).attr("data-amount", total);
@@ -57,13 +59,18 @@ function setRadioButtonDefaults() {
   const submit = $("#submit-application");
 
   const currentDate = new Date();
-  const earlyBirdEndDate = new Date("2026-07-31T23:59:59");
-  const regularEndDate = new Date("2025-11-06T23:59:59");
+  const earlyBirdEndDate = parseEndOfDay(config?.earlyBirdDeadline);
+  const regularEndDate = parseEndOfDay(config?.regularDeadline);
 
-  if (currentDate <= earlyBirdEndDate) {
+  earlyBirdRadio.prop("disabled", false);
+  regularRadio.prop("disabled", false);
+  studentRadio.prop("disabled", false);
+  submit.prop("disabled", false);
+
+  if (earlyBirdEndDate && currentDate <= earlyBirdEndDate) {
     earlyBirdRadio.prop("checked", true).prop("disabled", false);
     regularRadio.prop("disabled", true);
-  } else if (currentDate <= regularEndDate) {
+  } else if (regularEndDate && currentDate <= regularEndDate) {
     regularRadio.prop("checked", true).prop("disabled", false);
     earlyBirdRadio.prop("disabled", true);
   } else {
@@ -112,7 +119,7 @@ $("#submit-application").click(async function (e) {
     let appInfo = {
       fullName: `${formValues.firstName} ${formValues.lastName}`,
       businessName: formValues.businessName,
-      boothDescription: formValues.boothDescription,
+      boothDescription: formValues.foodProducts,
       email: formValues.email,
       phone: formValues.phone,
       tableOption: formValues.tableOption,
@@ -139,13 +146,6 @@ $("#submit-application").click(async function (e) {
 });
 
 $(document).ready(async function () {
-  const formatter = new Intl.NumberFormat("en-CA", {
-    style: "currency",
-    currency: "CAD",
-  });
-
-  let config;
-
   // Load config.json dynamically
   try {
     const res = await fetch("config.json");
@@ -154,8 +154,8 @@ $(document).ready(async function () {
     console.error("Failed to load config.json", err);
     return;
   }
-  
-  $("#form-title").text(config.title);
+
+  applyConfig(config);
 
   // --- Init ---
   $(".ui.checkbox").checkbox();
@@ -199,7 +199,7 @@ $(document).ready(async function () {
     onFailure: function (formErrors) {
       $("#errorMessage")
         .html(
-          "<ul class='list'><li>" + formErrors.join("</li><li>") + "</li></ul>"
+          "<ul class='list'><li>" + formErrors.join("</li><li>") + "</li></ul>",
         )
         .show();
       return false;
@@ -209,3 +209,75 @@ $(document).ready(async function () {
   // Attach pricingOption to radio buttons
   $("[name='boothPricing']").on("change", pricingOption);
 });
+
+function parseEndOfDay(dateStr) {
+  if (!dateStr) return null;
+  return new Date(`${dateStr}T23:59:59`);
+}
+
+function formatDateLong(dateStr) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) return dateStr;
+  return date.toLocaleDateString("en-CA", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function setAmount(selector, value) {
+  $(selector).attr("data-amount", value);
+}
+
+function setText(selector, value) {
+  if (value !== undefined && value !== null && value !== "") {
+    $(selector).text(value);
+  }
+}
+
+function applyConfig(cfg) {
+  const prices = cfg.prices || {};
+
+  setText("#form-title", cfg.title);
+  setText("#eventDateText", formatDateLong(cfg.eventDate));
+  setText("#eventLocationText", cfg.location);
+  setText("#setupTimeText", cfg.setupTime);
+  setText("#eventTimeText", cfg.eventTime);
+  setText("#earlyBirdDeadline", formatDateLong(cfg.earlyBirdDeadline));
+  setText("#applicationDeadline", formatDateLong(cfg.regularDeadline));
+
+  const earlyBird = prices.earlyBird ?? 100;
+  const regular = prices.regular ?? 125;
+  const student = prices.student ?? 50;
+  const extraTable = prices.extraTable ?? 50;
+  const tableSpace = prices.tableSpace ?? 50;
+  const power = prices.power ?? 10;
+
+  setAmount("#earlyBird", earlyBird);
+  setAmount("#regular", regular);
+  setAmount("#studentGroup", student);
+  setAmount("#extraTable", extraTable);
+  setAmount("#spaceForTable", tableSpace);
+  setAmount("[name='powerNeeded']", power);
+
+  setText("#earlyBirdFeeText", formatter.format(earlyBird));
+  setText("#regularFeeText", formatter.format(regular));
+  setText("#extraTableFeeText", formatter.format(extraTable));
+  setText("#powerFeeText", formatter.format(power));
+
+  setText("#earlyBirdPriceLabel", formatter.format(earlyBird));
+  setText("#regularPriceLabel", formatter.format(regular));
+  setText("#studentPriceLabel", formatter.format(student));
+  setText("#extraTablePriceLabel", formatter.format(extraTable));
+  setText("#tableSpacePriceLabel", formatter.format(tableSpace));
+  setText("#powerPriceLabel", formatter.format(power));
+
+  if (cfg.etransferEmail) {
+    setText("#etransferEmailText", cfg.etransferEmail);
+    setText("#etransferEmailLink", cfg.etransferEmail);
+    $("#etransferEmailLink").attr("href", `mailto:${cfg.etransferEmail}`);
+  }
+  setText("#etransferMemoText", cfg.etransferMemo);
+}

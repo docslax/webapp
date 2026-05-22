@@ -142,5 +142,5 @@ python3 export_preorders.py forms/preorder/data.json export.csv
 
 ## Notes
 
-- Vendor pricing/deadline behavior is partly hardcoded in frontend files. Updating `forms/vendor/config.json` alone may not fully update rendered vendor form pricing/deadline behavior.
+- Vendor event details, pricing labels/amounts, e-transfer copy, and deadline gating load from `forms/vendor/config.json` at runtime.
 - For first-time server setup (systemd, Nginx, TLS, firewall, validation, rollback), use [RUNBOOK.md](RUNBOOK.md).
